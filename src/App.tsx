@@ -1,11 +1,12 @@
 import './App.css';
-import Button from '@mui/material/Button';
+import Router from './Routes';
+import NiceModal from "@ebay/nice-modal-react";
 
 function App() {
   return (
-    <div className="App">
-      <Button variant="contained">Hello World</Button>
-    </div>
+    <NiceModal.Provider>
+      <Router />
+    </NiceModal.Provider>
   );
 }
 

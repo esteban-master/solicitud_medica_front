@@ -1,7 +1,6 @@
 import { Grid, Typography, Autocomplete, TextField } from "@mui/material"
 import ListProfessional from "../../components/schedule/ListProfessional"
 
-
 const professions = [
   { label: 'Oftalmologo', id: 1}, 
   { label: 'Urologo', id: 2}, 
@@ -36,6 +35,8 @@ const Schedule = () => {
         <Typography variant="h2" component="h2">5 resultados para Medico general</Typography>
       </Grid>
       <ListProfessional />
+
+      
     </Grid>
   )
 }

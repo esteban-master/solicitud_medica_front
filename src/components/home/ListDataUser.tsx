@@ -12,7 +12,7 @@ type User = {
 const ListDataUser = ({ data }: { data: User }) => {
   
   return (
-    <Grid container item spacing={1}>
+    <Grid container item spacing={1} xs={12} md={6}>
       <Grid container item xs={12}>
         <Grid item xs={4}>
           <Typography variant="h4" component="h4">Dirección</Typography>

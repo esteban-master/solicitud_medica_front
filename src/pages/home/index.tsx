@@ -1,16 +1,28 @@
 import { Button, Grid, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import ListDataUser from "../../components/home/ListDataUser"
-import ListDetailInfo from "../../components/home/ListDetailInfo"
-
-
+import CurrentMedications from "../../components/home/CurrentMedications"
+import LastDoctorsSeen from "../../components/home/LastDoctorsSeen"
 
 const Home = () => {
   let navigate = useNavigate();
   return (
     <Grid container spacing={3}>
-      <Grid item>
+      <Grid item xs={12} md={6}>
         <Typography variant="h1" component="h1" >Hola Nelida Leal</Typography>
+      </Grid>
+      <Grid xs={12} md={6} item container justifyContent={['center', 'center', 'end']}> 
+        <Button 
+          variant="contained" 
+          style={{
+            backgroundColor: '#AF061B'
+          }}
+          fullWidth
+          size="large"
+          onClick={() => navigate('/agendar')}
+        >
+          Solicitar hora medica
+        </Button>
       </Grid>
 
       <ListDataUser 
@@ -23,21 +35,13 @@ const Home = () => {
         }} 
       />
 
-      <ListDetailInfo />
-
-      
-      <Grid item container justifyContent="center"> 
-        <Button 
-          variant="contained" 
-          style={{
-            backgroundColor: '#AF061B'
-          }}
-          size="large"
-          onClick={() => navigate('/agendar')}
-        >
-          Solicitar hora medica
-        </Button>
+      <Grid item xs={12} md={6}>
+        <Typography variant='h2' component="h2">Antecedentes mórbidos</Typography>
+        <Typography variant='body1' component="p">Diabetes - Hipertencion arterial - Obesidad - Artitris reumatoide </Typography>
       </Grid>
+
+      <CurrentMedications />
+      <LastDoctorsSeen />
     </Grid>
   )
 }

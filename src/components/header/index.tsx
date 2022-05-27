@@ -1,18 +1,21 @@
-import { Button, Stack } from "@mui/material"
-import { useNavigate } from "react-router-dom"
+import { Container, Stack } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import Menu from '../menu';
 
-const Header = () => {
-  const navigate = useNavigate()
+function Header() {
+  const navigate = useNavigate();
   return (
-    <Stack direction="row" spacing={2} justifyContent="space-between" padding={2}>
-      <img 
-        onClick={() => navigate('/inicio')}
-        src={`${process.env.PUBLIC_URL}/logo-cha-1.png`} 
-        alt="Logo salud" 
-      />
-      <Button variant="outlined">FICHA CLINICA</Button>
-    </Stack>
-  )
+    <Container maxWidth="lg">
+      <Stack direction="row" spacing={2} justifyContent="space-between" padding={2}>
+        <img
+          onClick={() => navigate('/inicio')}
+          src={`${process.env.PUBLIC_URL}/logo-cha-1.png`}
+          alt="Logo salud"
+        />
+        <Menu />
+      </Stack>
+    </Container>
+  );
 }
 
-export default Header
+export default Header;

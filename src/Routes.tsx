@@ -3,6 +3,13 @@ import Layout from "./components/layout";
 import Home from "./pages/home";
 import Login from "./pages/login";
 import Schedule from "./pages/schedule";
+import HomeIcon from '@mui/icons-material/Home';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+
+export const routesItems = [
+  { label: 'Inicio', route: 'inicio', component: <Home />, active: true, icon: <HomeIcon /> },
+  { label: 'Solicitar hora medica', route: 'agendar', component: <Schedule />, active: true, icon: <EventAvailableIcon /> },
+];
 
 export default function Router() {
   return (
@@ -10,8 +17,11 @@ export default function Router() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Login />} />
-          <Route path="inicio" element={<Home />} />
-          <Route path="agendar" element={<Schedule />} />
+          {
+            routesItems
+              .filter(route => route.active)
+              .map(({route, component}) => <Route path={route} element={component} />)
+          }
           <Route path="*" element={<NoMatch />} />
         </Route>
       </Routes>

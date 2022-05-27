@@ -1,12 +1,12 @@
-import { Link, Stack } from "@mui/material"
+import { Container, Grid, Link } from "@mui/material"
 
 const Banner = ({ links }: { links: [string, string][] }) => {
   return (
-    <Stack sx={{
+    <Grid container sx={{
       backgroundColor: '#ED3232',
       padding: 2,
     }}>
-      <Stack>
+      <Container maxWidth="lg">
         {
           links.map(([name, link]) => <Link 
             key={name}
@@ -18,8 +18,8 @@ const Banner = ({ links }: { links: [string, string][] }) => {
           {name}
         </Link>)
         }
-      </Stack>
-    </Stack>
+      </Container>
+    </Grid>
   )
 }
 

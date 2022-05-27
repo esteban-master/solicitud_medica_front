@@ -8,8 +8,7 @@ const listProfessional = [
   { name: 'Remy Sharp', profession: 'Medico general', id: 1, photo: 'https://mui.com/static/images/avatar/3.jpg' },
   { name: 'Remy Sharp', profession: 'Medico general', id: 2, photo: 'https://mui.com/static/images/avatar/3.jpg' },
   { name: 'Remy Sharp', profession: 'Medico general', id: 3, photo: 'https://mui.com/static/images/avatar/3.jpg' },
-  { name: 'Remy Sharp', profession: 'Medico general', id: 4, photo: 'https://mui.com/static/images/avatar/3.jpg' },
-  { name: 'Remy Sharp', profession: 'Medico general', id: 5, photo: 'https://mui.com/static/images/avatar/3.jpg' },
+  { name: 'Remy Sharp', profession: 'Medico general', id: 4, photo: 'https://mui.com/static/images/avatar/3.jpg' }
 ]
 
 const ListProfessional = () => {
@@ -17,7 +16,7 @@ const ListProfessional = () => {
   return (
     <Grid item container xs={12} spacing={1}>
       {
-        listProfessional.map(item => <Grid key={item.id} item xs={12} sm={6} md={4}>
+        listProfessional.map(item => <Grid key={item.id} item xs={12} md={6}>
           <Card>
             <CardHeader 
               avatar={<Avatar alt={item.name} src={item.photo} />}

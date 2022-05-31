@@ -1,15 +1,18 @@
 import './App.css';
 import Router from './Routes';
 import NiceModal from "@ebay/nice-modal-react";
-import { ScheduleModal } from './components/schedule/ScheduleModal';
+import ScheduleModal from './components/scheduleModal';
+import SheduleProvider from './state/context/SheduleContext';
 
-NiceModal.register('schedule', ScheduleModal);
+NiceModal.register('scheduleModal', ScheduleModal);
 
 function App() {
   return (
-    <NiceModal.Provider>
-      <Router />
-    </NiceModal.Provider>
+    <SheduleProvider>
+      <NiceModal.Provider>
+        <Router />
+      </NiceModal.Provider>
+    </SheduleProvider>
   );
 }
 

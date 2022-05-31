@@ -8,6 +8,7 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
 import LoginIcon from '@mui/icons-material/Login';
+import EventIcon from '@mui/icons-material/Event';
 
 function Menu() {
   const navigate = useNavigate();
@@ -40,6 +41,14 @@ function Menu() {
               </ListItem>
             ))
           }
+          <ListItem>
+            <ListItemButton>
+              <ListItemIcon>
+                <EventIcon />
+              </ListItemIcon>
+              <ListItemText primary="Solicitar hora medica"/>
+            </ListItemButton>
+          </ListItem>
         </List>
         <Divider />
         <List>

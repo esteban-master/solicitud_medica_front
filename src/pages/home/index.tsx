@@ -1,11 +1,14 @@
-import { Button, Grid, Typography } from "@mui/material"
-import { useNavigate } from "react-router-dom"
+import { useState } from "react";
+import { Alert, Button, Grid, Snackbar, Typography } from "@mui/material"
 import ListDataUser from "../../components/home/ListDataUser"
 import CurrentMedications from "../../components/home/CurrentMedications"
 import LastDoctorsSeen from "../../components/home/LastDoctorsSeen"
+import NiceModal from '@ebay/nice-modal-react';
+import { useShedule } from "../../state/context/SheduleContext"
 
 const Home = () => {
-  let navigate = useNavigate();
+  const { changeState } = useShedule()
+  const [successRequest, setSuccessRequest] = useState({open: false, message: ''})
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={6}>
@@ -19,7 +22,14 @@ const Home = () => {
           }}
           fullWidth
           size="large"
-          onClick={() => navigate('/agendar')}
+          onClick={() => {
+            changeState({ activeStep: 0 })
+            NiceModal
+              .show('scheduleModal')
+              .then(res => {
+                setSuccessRequest({ open: true, message: 'Solicitud creada exitosamente' })
+              })
+          }}
         >
           Solicitar hora medica
         </Button>
@@ -42,6 +52,18 @@ const Home = () => {
 
       <CurrentMedications />
       <LastDoctorsSeen />
+
+      <Snackbar
+        autoHideDuration={2000}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        open={successRequest.open}
+        onClose={() => setSuccessRequest(prev => ({...prev, open: false}))}
+        message={successRequest.message}
+      >
+        <Alert onClose={() => setSuccessRequest(prev => ({...prev, open: false}))} severity="success" sx={{ width: '100%' }}>
+          {successRequest.message}
+        </Alert>
+      </Snackbar>
     </Grid>
   )
 }

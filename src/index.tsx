@@ -8,8 +8,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers';
 
 const theme = createTheme({
   typography: {
@@ -32,13 +30,11 @@ const theme = createTheme({
 
 
 ReactDOM.render(
-  <LocalizationProvider dateAdapter={AdapterDateFns}>
-    <ThemeProvider theme={theme}>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    </ThemeProvider>
-  </LocalizationProvider>,
+  <ThemeProvider theme={theme}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </ThemeProvider>,
   document.getElementById('root')
 );
 

@@ -1,5 +1,5 @@
 import { Grid, Typography } from "@mui/material"
-import ListProfessional from "../schedule/ListProfessional"
+import ListProfessional from "../scheduleModal/ListProfessional"
 
 const LastDoctorsSeen = () => {
   return (
@@ -7,7 +7,7 @@ const LastDoctorsSeen = () => {
       <Grid item xs={12}>
         <Typography variant='h2' component="h2">Últimos médicos vistos</Typography>
       </Grid>
-      <ListProfessional />
+      <ListProfessional withButton/>
     </Grid>
   )
 }

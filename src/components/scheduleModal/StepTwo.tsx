@@ -1,24 +1,36 @@
 import { Fragment } from "react";
-import {  Button, Grid, Stack, Typography } from "@mui/material";
+import {  Button, CircularProgress, Grid, Stack, Typography } from "@mui/material";
 import { useShedule } from "../../state/context/SheduleContext";
 import esLocale from 'date-fns/locale/es'
 import format from 'date-fns/format'
 import set from 'date-fns/set'
 import add from 'date-fns/add'
 import isBefore from 'date-fns/isBefore'
+import { MedicalCare } from "../../models/medicalCare";
+import { useHoursOfMedicalCareUsed } from "../../api/medicalCare";
 
 type Dates = { label: string, hour: number, minutes: number }
 
-const ListDates = ({ dates, handleClickDate, dayIndex }: { dayIndex: number ,dates: Dates[], handleClickDate: (date: Date) => void}) => {
-
+const ListDates = ({ dates, handleClickDate, dayIndex, hoursOfMedicalCareUsed }: { dayIndex: number ,dates: Dates[], handleClickDate: (date: Date) => void, hoursOfMedicalCareUsed: string[] }) => {
+  
   return <Stack spacing={1}>
     {
       dates.map(date => {
-        const dateIsBefore = isBefore(add(set(new Date(), {
+        const setDate = set(new Date(), {
           hours: date.hour,
           minutes: date.minutes,
           seconds: 0
-        }), { days: dayIndex }), new Date());
+        });
+        const dateIsBefore = isBefore(add(setDate, { days: dayIndex }), new Date());
+        const dateFns = add(setDate, { days: dayIndex });
+        const formatDate = format(dateFns, "dd-MMMM-yyyy HH:mm", { locale: esLocale });
+        const hourUsed = hoursOfMedicalCareUsed.includes(formatDate)
+        // console.log({ 
+        //   dateIsBefore,
+        //   hourUsed, 
+        //   hoursOfMedicalCareUsed,
+        //   formatDate
+        // })
         return (
           <Button
             key={date.label} 
@@ -27,19 +39,13 @@ const ListDates = ({ dates, handleClickDate, dayIndex }: { dayIndex: number ,dat
               color: '#004E9C',
               fontWeight: 'bold'
             }} 
-            disabled={dateIsBefore}
+            disabled={dateIsBefore || hourUsed}
             variant="text"
             onClick={() =>{
-              const dateFns = set(new Date(), {
-                hours: date.hour,
-                minutes: date.minutes,
-                seconds: 0
-              })
-
-              handleClickDate(add(dateFns, { days: dayIndex }))
+              handleClickDate(dateFns)
             }}
           >
-            <Typography style={{ textDecoration: dateIsBefore ? 'none' : 'underline' }}>{dateIsBefore ? '-' : date.label}</Typography>
+            <Typography style={{ textDecoration: dateIsBefore || hourUsed ? 'none' : 'underline' }}>{dateIsBefore || hourUsed ? '-' : date.label}</Typography>
           </Button>
         )
       })
@@ -58,13 +64,23 @@ const dates = [
 const datesDay = [dates, dates, dates, dates, dates]
 
 export const StepTwo = () => {
-  const { changeState } = useShedule()
+  console.log('DATE', new Date())
+  const { state ,changeState } = useShedule()
+  const { data, isLoading, isSuccess } = useHoursOfMedicalCareUsed({
+    "id": state.professional.id,
+    "startDate": new Date(),
+    "endDate": add(new Date(), { days: 3})
+  })
+  if (isLoading) {
+    return <CircularProgress />
+  }
+
   return (
     <Fragment>
       <Grid container marginY={2}>
         {
           datesDay.map((item, index) => (
-            <Grid item xs={6}>
+            <Grid item xs={6} key={index}>
               <Stack direction="column" alignItems="center">
                 <Stack>
                   <Typography variant="body1" component="p" style={{ fontWeight: 'bold'}}>
@@ -74,7 +90,11 @@ export const StepTwo = () => {
                     { format(add(new Date(), { days: index }), "dd 'de' MMMM", { locale: esLocale }) }
                   </Typography>
                 </Stack>
-                <ListDates dayIndex={index} dates={item} handleClickDate={date => changeState({ date, activeStep: 2 })} />
+                <ListDates 
+                  hoursOfMedicalCareUsed={isSuccess ? data.map(item => format(new Date(item.date), 'dd-MMMM-yyyy HH:mm', { locale: esLocale })) : []} 
+                  dayIndex={index} 
+                  dates={item} 
+                  handleClickDate={date => changeState({ date, activeStep: 2 })} />
               </Stack>
             </Grid>
           ))

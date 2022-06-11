@@ -4,12 +4,11 @@ import axios from './index'
 import camelcaseKeys from 'camelcase-keys';
 
 
-const useHealthProfessionals = (id: number) => {
-  console.log("ID: ", id, !!id)
+const useHealthProfessionals = (professionId: number | undefined) => {
   return useQuery<HealthProfessional[]>('healthProfessionals', async () => {
-    const { data } = await axios.get(`/health_professional?id=${id}`)
+    const { data } = await axios.get(`/health_professional?professionId=${professionId}`)
     return camelcaseKeys(data);
-  }, { enabled: !!id })
+  }, { enabled: !!professionId })
 }
 
 export {

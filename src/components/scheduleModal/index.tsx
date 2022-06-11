@@ -26,12 +26,12 @@ const ScheduleModal = NiceModal.create(() => {
     const toastId = toast.loading("Creando cita...", { position: toast.POSITION.BOTTOM_CENTER })
     createMedicalCareMutation.mutate({ 
       date: state.date, 
-      patientId: 23, 
+      patientId: 30, 
       healthProfessionalId: state.professional.id 
     }, {
       onSuccess: (data, variables, context) => {
         modal.resolve({ data, toastId });
-        changeState({ professionalFilter: 0, activeStep: 0, professional: '' })
+        changeState({ professionalFilter: null, activeStep: 0, professional: '' })
         modal.remove()
       }
     })
@@ -39,7 +39,7 @@ const ScheduleModal = NiceModal.create(() => {
   }
 
   function handleClose() {
-    changeState({ professionalFilter: 0, activeStep: 0, professional: '' })
+    changeState({ professionalFilter: null, activeStep: 0, professional: '' })
     modal.remove()
   }
 

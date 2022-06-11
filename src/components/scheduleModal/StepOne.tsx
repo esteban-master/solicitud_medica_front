@@ -8,14 +8,14 @@ import { useProfessions } from "../../api/profession";
 const StepOne = () => {
   const { state ,changeState } = useShedule();
   const professions =  useProfessions()
-  const healthProfessionals  = useHealthProfessionals(state.professionalFilter)
+  const healthProfessionals  = useHealthProfessionals(state.professionalFilter?.id)
 
   if (professions.isLoading) {
     return <CircularProgress />
   }
 
   const professionsOptions: { label: string, id: number }[] = professions.isSuccess ? professions.data.map(item => ({ label: item.name, id: item.id })) : [];
-  console.log({professionsOptions})
+  console.log({professionsOptions, healthProfessionals})
   return (
     <Grid container spacing={2}>
       {
@@ -23,31 +23,34 @@ const StepOne = () => {
         <React.Fragment>
           <Grid item xs={12}>
             <Autocomplete
-                  onChange={(_, item) => changeState({ professionalFilter: item?.id })}
-                  disablePortal
-                  fullWidth
-                  value={professionsOptions.filter(item => item.id === state.professionalFilter)[0]}
-                  options={professionsOptions}
-                  renderInput={(params) => <TextField {...params} label="Profesional" />}
-                />
+              onChange={(_, item) => changeState({ professionalFilter: item })}
+              disablePortal
+              fullWidth
+              value={state.professionalFilter}
+              options={professionsOptions}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
+              renderInput={(params) => <TextField {...params} label="Profesional" />}
+            />
           </Grid>
           {
             !state.professionalFilter ? (
-              <Grid item>
+              <Grid item xs={12}>
                 <Typography variant="h2" component="h2">Selecione un profesional</Typography>
               </Grid>
             ) : (
             <React.Fragment>
-              {/* {
+              {
                 healthProfessionals.isLoading ? <CircularProgress /> : healthProfessionals.isSuccess && 
                   <React.Fragment>
-                    <Grid item>
-                    <Typography variant="h2" component="h2">{healthProfessionals.data.length} resultados para {professions.data.find(item => item.id === state.professionalFilter)}</Typography>
+                    <Grid item xs={12}>
+                      <Typography variant="h2" component="h2">{healthProfessionals.data.length} resultados para {state.professionalFilter.label}</Typography>
                     </Grid>
-                    <ListProfessional data={healthProfessionals.data}/>
+                    <Grid item xs={12}>
+                      <ListProfessional data={healthProfessionals.data}/>
+                    </Grid>
                   </React.Fragment>
                   
-              } */}
+              }
             </React.Fragment>
             )
           }

@@ -2,7 +2,7 @@ import { FC, createContext, useState, ReactNode, useContext } from "react";
 
 export type SheduleState = {
   professional: any;
-  professionalFilter: number;
+  professionalFilter: { id: number, label: string } | null;
   date: Date;
   activeStep: number;
 }
@@ -27,7 +27,7 @@ const SheduleProvider: FC<ReactNode> = ({ children }) => {
   const [state, setState] = useState<SheduleState>({
     professional: '',
     date: new Date(),
-    professionalFilter: 0,
+    professionalFilter: null,
     activeStep: 0
   })
 

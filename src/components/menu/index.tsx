@@ -2,17 +2,29 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { routesItems } from '../../Routes';
 import {
+  Button,
   Divider,
-  Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack,
+  Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack, TextField, Typography,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
-import LoginIcon from '@mui/icons-material/Login';
 import EventIcon from '@mui/icons-material/Event';
+import { useAuth } from '../../state/context/auth';
 
 function Menu() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const { state, signIn, signOut } = useAuth()
+
+  const [login, setLogin] = useState({
+    email: '',
+    password: ''
+  })
+
+  function handleSubmit() {
+    signIn({ email: login.email, password: login.password });
+  }
+  
   return (
     <Stack>
       <IconButton
@@ -41,21 +53,25 @@ function Menu() {
               </ListItem>
             ))
           }
-          <ListItem>
-            <ListItemButton>
-              <ListItemIcon>
-                <EventIcon />
-              </ListItemIcon>
-              <ListItemText primary="Solicitar hora medica"/>
-            </ListItemButton>
-          </ListItem>
+          {
+            state.user && 
+            <ListItem>
+              <ListItemButton>
+                <ListItemIcon>
+                  <EventIcon />
+                </ListItemIcon>
+                <ListItemText primary="Solicitar hora medica"/>
+              </ListItemButton>
+            </ListItem>
+          }
         </List>
         <Divider />
         <List>
-          <ListItem>
+          
+          { state.user ? <ListItem>
             <ListItemButton
               onClick={() => {
-                console.log('Salir')
+                signOut();
               }}
             >
               <ListItemIcon>
@@ -63,19 +79,19 @@ function Menu() {
               </ListItemIcon>
               <ListItemText primary="Cerrar sesion" />
             </ListItemButton>
-          </ListItem>
-          <ListItem>
-            <ListItemButton
-              onClick={() => {
-                console.log('Login')
-              }}
-            >
-              <ListItemIcon>
-                <LoginIcon />
-              </ListItemIcon>
-              <ListItemText primary="Iniciar sesion" />
-            </ListItemButton>
-          </ListItem>
+          </ListItem> : <>
+            <ListItem>
+              <TextField label="Correo" variant="outlined" type="email" onChange={event => setLogin(prev => ({ ...prev, email: event.target.value }))}/>
+            </ListItem>
+            <ListItem>
+              <TextField label="Contraseña" variant="outlined" type="password" onChange={event => setLogin(prev => ({ ...prev, password: event.target.value}))}/>
+            </ListItem>
+            <ListItem>
+              <Button fullWidth variant="contained" onClick={handleSubmit}>
+                { state.isLoading ? 'Ingresando...' : 'Entrar' }
+              </Button>
+            </ListItem>
+          </> }
         </List>
       </Drawer>
     </Stack>

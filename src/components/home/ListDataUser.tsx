@@ -1,15 +1,7 @@
 import { Grid, Typography } from "@mui/material"
-import { Fragment } from "react"
+import { Patient } from "../../models/Patient"
 
-type User = {
-  name: string,
-  address: string,
-  age: number,
-  phoneNumber: string,
-  responsibleFamily: string
-}
-
-const ListDataUser = ({ data }: { data: User }) => {
+const ListDataUser = ({ data }: { data: Patient | undefined }) => {
   
   return (
     <Grid container item spacing={1} xs={12} md={6}>
@@ -18,7 +10,7 @@ const ListDataUser = ({ data }: { data: User }) => {
           <Typography variant="h4" component="h4">Dirección</Typography>
         </Grid>
         <Grid item xs={8}>
-          <Typography variant="body1" component="p">{data.address}</Typography>
+          <Typography variant="body1" component="p">{data?.address}</Typography>
         </Grid>
       </Grid>
 
@@ -27,7 +19,7 @@ const ListDataUser = ({ data }: { data: User }) => {
           <Typography variant="h4" component="h4">Edad</Typography>
         </Grid>
         <Grid item xs={8}>
-          <Typography variant="body1" component="p">{data.age}</Typography>
+          <Typography variant="body1" component="p">{data?.age}</Typography>
         </Grid>
       </Grid>
       
@@ -36,16 +28,7 @@ const ListDataUser = ({ data }: { data: User }) => {
           <Typography variant="h4" component="h4">Contacto</Typography>
         </Grid>
         <Grid item xs={8}>
-          <Typography variant="body1" component="p">{data.phoneNumber}</Typography>
-        </Grid>
-      </Grid>
-      
-      <Grid container item xs={12}>
-        <Grid item xs={4}>
-          <Typography variant="h4" component="h4">Familiar responsable</Typography>
-        </Grid>
-        <Grid item xs={8}>
-          <Typography variant="body1" component="p">{data.responsibleFamily}</Typography>
+          <Typography variant="body1" component="p">{data?.phone}</Typography>
         </Grid>
       </Grid>
     </Grid>

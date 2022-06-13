@@ -1,12 +1,8 @@
-export type HealthProfessional = {
+import { Entity } from "./entity";
+
+export type HealthProfessional = Entity & {
   id:              number;
   professionName: string;
   entityId:       number;
-  createdAt:      Date;
-  updatedAt:      Date;
   professionId:   number;
-  name:            string;
-  taxNumber:      string;
-  address:         string;
-  photo:           string;
 }

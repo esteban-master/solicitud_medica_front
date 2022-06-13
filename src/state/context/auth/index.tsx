@@ -1,14 +1,18 @@
-import { Auth, onAuthStateChanged, User, AuthError, UserCredential, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth";
+import { Auth, onAuthStateChanged, User, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { FC, createContext, useState, ReactNode, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { auth } from "../../../firebase/firebaseConfig";
-
+import { HealthProfessional } from "../../../models/healthProfessional";
 type LoginData = { email: string, password: string }
+
+export type UserEntity = Partial<HealthProfessional> & User;
 
 export type AuthState = {
   user: User | null;
   isLoading: boolean;
-  error: any
+  error: any;
+  isProfessional: boolean
 }
 
 export type AuthContextType = {
@@ -17,8 +21,8 @@ export type AuthContextType = {
   signIn: (data:LoginData) => void;
   signUp: (data:LoginData) => void;
   signOut: () => Promise<void>;
+  changeState: (column: Partial<AuthState>) => void;
 }
-
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -34,8 +38,11 @@ const AuthProvider: FC<ReactNode> = ({ children }) => {
   const [state, setState] = useState<AuthState>({
     user: null,
     isLoading: false,
-    error: null
+    error: null,
+    isProfessional: false
   })
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     onAuthStateChanged(auth, user => {
@@ -43,15 +50,19 @@ const AuthProvider: FC<ReactNode> = ({ children }) => {
     })
   }, [])
 
+  function changeState(state: Partial<AuthState>): void {
+    setState(prevState => ({ ...prevState, ...state }))
+  }
+
   const signIn = ({ email, password }: LoginData) => {
     setState(prev => ({ ...prev, isLoading: true }))
     signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
+      .then((credentials) => {
         setState(prev => ({ ...prev, isLoading: false }))
         toast.success('Ingreso exitoso', { position: toast.POSITION.BOTTOM_CENTER })
+        navigate('/inicio')
       })
       .catch((error) => {
-        console.log({error})
         setState(prev => ({ ...prev, isLoading: false, error: error }))
         toast.error('Credenciales invalidas', { position: toast.POSITION.BOTTOM_CENTER })
       })
@@ -61,12 +72,13 @@ const AuthProvider: FC<ReactNode> = ({ children }) => {
 
   const handleSignOut = () => signOut(auth).then(() => {
     toast.success('Sesion finalizada', { position: toast.POSITION.BOTTOM_CENTER })
+    setState(prev => ({ ...prev, isProfessional: false }))
   }).catch((error) => {
     toast.error('Intentalo nuevamente', { position: toast.POSITION.BOTTOM_CENTER })
   });
 
   return (
-    <AuthContext.Provider value={{ state, auth, signIn, signUp, signOut: handleSignOut }}>
+    <AuthContext.Provider value={{ state, auth, signIn, signUp, signOut: handleSignOut, changeState }}>
       { children }
     </AuthContext.Provider>
   )

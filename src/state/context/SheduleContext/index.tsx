@@ -5,6 +5,10 @@ export type SheduleState = {
   professionalFilter: { id: number, label: string } | null;
   date: Date;
   activeStep: number;
+  profesionalEditId: number;
+  patientEditId: number;
+  openMenuEdit: boolean;
+  anchorEl: HTMLElement | null
 }
 
 export type SheduleContextType = {
@@ -28,7 +32,11 @@ const SheduleProvider: FC<ReactNode> = ({ children }) => {
     professional: '',
     date: new Date(),
     professionalFilter: null,
-    activeStep: 0
+    activeStep: 0,
+    profesionalEditId: 0,
+    patientEditId: 0,
+    anchorEl: null,
+    openMenuEdit: false
   })
 
   function changeState(state: Partial<SheduleState>): void {

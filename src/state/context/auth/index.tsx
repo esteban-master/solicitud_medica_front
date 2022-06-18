@@ -6,13 +6,12 @@ import { auth } from "../../../firebase/firebaseConfig";
 import { HealthProfessional } from "../../../models/healthProfessional";
 type LoginData = { email: string, password: string }
 
-export type UserEntity = Partial<HealthProfessional> & User;
+// export type UserEntity = Partial<> & User;
 
 export type AuthState = {
   user: User | null;
   isLoading: boolean;
   error: any;
-  isProfessional: boolean
 }
 
 export type AuthContextType = {
@@ -38,10 +37,8 @@ const AuthProvider: FC<ReactNode> = ({ children }) => {
   const [state, setState] = useState<AuthState>({
     user: null,
     isLoading: false,
-    error: null,
-    isProfessional: false
+    error: null
   })
-
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -57,7 +54,7 @@ const AuthProvider: FC<ReactNode> = ({ children }) => {
   const signIn = ({ email, password }: LoginData) => {
     setState(prev => ({ ...prev, isLoading: true }))
     signInWithEmailAndPassword(auth, email, password)
-      .then((credentials) => {
+      .then(() => {
         setState(prev => ({ ...prev, isLoading: false }))
         toast.success('Ingreso exitoso', { position: toast.POSITION.BOTTOM_CENTER })
         navigate('/inicio')

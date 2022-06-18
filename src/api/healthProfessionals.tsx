@@ -2,8 +2,6 @@ import { useQuery } from "react-query";
 import { HealthProfessional } from "../models/healthProfessional";
 import axios from './index'
 import camelcaseKeys from 'camelcase-keys';
-import { Patient } from "../models/Patient";
-
 
 const useHealthProfessionals = (professionId: number | undefined) => {
   return useQuery<HealthProfessional[]>('healthProfessionals', async () => {
@@ -14,7 +12,7 @@ const useHealthProfessionals = (professionId: number | undefined) => {
 
 const useHealthProfessional = (uid: string | undefined) => {
   return useQuery<HealthProfessional>(['healthProfessional', uid], async () => {
-    const { data } = await axios.get(`/healthProfessional/${uid}`)
+    const { data } = await axios.get(`/health_professional/${uid}`)
     return camelcaseKeys(data);
   }, { enabled: !!uid })
 }

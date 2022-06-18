@@ -1,27 +1,19 @@
-import { Button, CircularProgress, Grid, Typography } from '@mui/material';
-import { usePatient } from '../../api/patient';
-import { useAuth } from '../../state/context/auth';
+import { Button, Grid, Typography } from '@mui/material';
 import { useShedule } from '../../state/context/SheduleContext';
 import { toast } from 'react-toastify';
 import CurrentMedications from './CurrentMedications';
 import LastDoctorsSeen from './LastDoctorsSeen';
 import ListDataUser from './ListDataUser';
 import NiceModal from '@ebay/nice-modal-react';
+import { EntityResponse } from '../../api/entity';
 
-const PatientData = () => {
+const PatientData = ({ data }: { data: EntityResponse }) => {
   const { changeState } = useShedule()
-  const auth = useAuth()
-  const uid = auth.state.user?.uid;
-  const patient = usePatient(uid);
-
-  if (patient.isLoading) {
-    return <CircularProgress />
-  }
 
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={6}>
-        <Typography variant="h1" component="h1" >Hola { patient.data?.name }</Typography>
+        <Typography variant="h1" component="h1" >Bienvenido/a { data.entity.name }</Typography>
       </Grid>
       <Grid xs={12} md={6} item container justifyContent={['center', 'center', 'end']}> 
         <Button 
@@ -45,7 +37,7 @@ const PatientData = () => {
       </Grid>
 
       <ListDataUser
-        data={patient.data} 
+        data={data} 
       />
 
       <Grid item xs={12} md={6}>

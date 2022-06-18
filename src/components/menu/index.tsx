@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { routesItems } from '../../routes';
+import HomeIcon from '@mui/icons-material/Home';
+import PersonIcon from '@mui/icons-material/Person';
 import {
   Button,
   Divider,
-  Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack, Switch, TextField, Typography
+  Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack, TextField
 } from '@mui/material';
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
 import EventIcon from '@mui/icons-material/Event';
@@ -15,7 +15,7 @@ import { useAuth } from '../../state/context/auth';
 function Menu() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const { state, signIn, signOut, changeState } = useAuth()
+  const { state, signIn, signOut } = useAuth()
 
   const [login, setLogin] = useState({
     email: 'esteban@gmail.com',
@@ -38,22 +38,18 @@ function Menu() {
         onClose={() => setOpen(false)}
       >
         <List>
-          {
-            routesItems.filter(route => route.active).map(({ label, icon, route }) => (
-              <ListItem key={label}>
-                <ListItemButton
-                  onClick={() => {
-                    navigate(route);
-                  }}
-                >
-                  <ListItemIcon>
-                    {icon}
-                  </ListItemIcon>
-                  <ListItemText primary={label} />
-                </ListItemButton>
-              </ListItem>
-            ))
-          }
+          <ListItem>
+            <ListItemButton
+              onClick={() => {
+                navigate('/inicio');
+              }}
+            >
+              <ListItemIcon>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText primary='Inicio' />
+            </ListItemButton>
+          </ListItem>
           {
             state.user && 
             <ListItem>
@@ -74,13 +70,13 @@ function Menu() {
             <ListItem>
               <ListItemButton
                 onClick={() => {
-                  navigate('/admin')
+                  navigate('/profesional')
                 }}
               >
                 <ListItemIcon>
-                  <AdminPanelSettingsIcon />
+                  <PersonIcon />
                 </ListItemIcon>
-                <ListItemText primary="Adminstracion" />
+                <ListItemText primary="Profesional" />
               </ListItemButton>
             </ListItem>
             <ListItem>
@@ -102,15 +98,6 @@ function Menu() {
               </ListItem>
               <ListItem>
                 <TextField label="Contraseña" variant="outlined" type="password" value={login.password} onChange={event => setLogin(prev => ({ ...prev, password: event.target.value}))}/>
-              </ListItem>
-              <ListItem>
-                <Stack direction="row" alignItems="center">
-                  <Typography>Paciente</Typography>
-                  <Switch 
-                    checked={state.isProfessional}
-                    onChange={(event) => changeState({ isProfessional: event.target.checked })}/>
-                  <Typography>Profesional</Typography>
-                </Stack>                
               </ListItem>
               <ListItem>
                 <Button fullWidth variant="contained" onClick={handleSubmit}>

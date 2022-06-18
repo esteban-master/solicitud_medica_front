@@ -7,4 +7,6 @@ export type Entity = {
   photo:          string;
   age:            number;
   phone:          string;
+  healthProfessionalId: number;
+  patient_id: number;
 }

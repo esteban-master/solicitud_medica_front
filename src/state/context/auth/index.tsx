@@ -41,11 +41,6 @@ const AuthProvider: FC<ReactNode> = ({ children }) => {
   })
   const navigate = useNavigate()
 
-  useEffect(() => {
-    onAuthStateChanged(auth, user => {
-      setState(prev => ({ ...prev, user }))
-    })
-  }, [])
 
   function changeState(state: Partial<AuthState>): void {
     setState(prevState => ({ ...prevState, ...state }))

@@ -1,37 +1,23 @@
-import { CircularProgress, Grid, Typography } from "@mui/material"
-import { Fragment } from "react";
-import { EntityResponse, useEntity } from "../../api/entity";
+import {  Grid, Typography } from "@mui/material"
 import PatientData from "../../components/home/patientData";
-import { useAuth } from "../../state/context/auth";
+import {  UserEntity } from "../../redux/auth/authSlice";
+import { useAuth } from "../../redux/store";
 
-const Professional = ({ data }: { data: EntityResponse }) => {
-
+const Professional = ({ data }: { data: UserEntity | null }) => {
   return (
     <Grid>
-      <Typography>Bienvenido/a {data.entity.name}</Typography>
+      <Typography>Bienvenido/a {data?.name}</Typography>
     </Grid>
   )
 }
 
 const Home = () => {
   const auth = useAuth()
-  const uid = auth.state.user?.uid;
-  const entity = useEntity(uid)
-
-  if(entity.isLoading) {
-    return <CircularProgress />
-  }
-
-  console.log({ data: entity.data })
+  console.log({auth})
   return (
     <Grid>
       {
-        entity.isSuccess && (
-          <>
-            { entity.data.entity.healthProfessionalId && <Professional data={entity.data}/> }
-            { entity.data.entity.patient_id && <PatientData data={entity.data}/> }
-          </>
-        )
+        auth.user && auth.user.healthProfessionalId ? <Professional data={auth.user} /> : <PatientData data={auth.user}/>
       }
     </Grid>
   )

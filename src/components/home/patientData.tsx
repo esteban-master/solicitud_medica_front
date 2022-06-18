@@ -5,15 +5,15 @@ import CurrentMedications from './CurrentMedications';
 import LastDoctorsSeen from './LastDoctorsSeen';
 import ListDataUser from './ListDataUser';
 import NiceModal from '@ebay/nice-modal-react';
-import { EntityResponse } from '../../api/entity';
+import { UserEntity } from '../../redux/auth/authSlice';
 
-const PatientData = ({ data }: { data: EntityResponse }) => {
+const PatientData = ({ data }: { data: UserEntity | null }) => {
   const { changeState } = useShedule()
 
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={6}>
-        <Typography variant="h1" component="h1" >Bienvenido/a { data.entity.name }</Typography>
+        <Typography variant="h1" component="h1" >Bienvenido/a { data?.name }</Typography>
       </Grid>
       <Grid xs={12} md={6} item container justifyContent={['center', 'center', 'end']}> 
         <Button 

@@ -10,20 +10,41 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
 import EventIcon from '@mui/icons-material/Event';
-import { useAuth } from '../../state/context/auth';
+import { handleSignOut, signIn } from '../../firebase/firebaseConfig';
+import { useAuth } from '../../redux/store';
+import { useDispatch } from 'react-redux';
+import { loginAction, logoutAction, toggleLoading } from '../../redux/auth/authSlice';
+import { useQueryClient } from 'react-query';
+import axios from '../../api/index'
+import camelcaseKeys from 'camelcase-keys';
 
 function Menu() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const { state, signIn, signOut } = useAuth()
+  const auth = useAuth()
+  const dispatch = useDispatch()
 
+  const queryClient = useQueryClient()
   const [login, setLogin] = useState({
     email: 'esteban@gmail.com',
     password: 'holaEsteban'
   })
 
   function handleSubmit() {
-    signIn({ email: login.email, password: login.password });
+    dispatch(toggleLoading())
+    signIn({ email: login.email, password: login.password }, (user) => {
+      queryClient.fetchQuery(['user', user.uid], async () => {
+        const { data } = await axios.get(`/entities/${user.uid}`)
+        return camelcaseKeys(data, { deep: true });
+      }).then(data => {
+        dispatch(loginAction({
+          uid: user.uid,
+          ...data.entity,
+          info: data.info
+        }))
+        navigate('/inicio')
+      })
+    });
   }
   
   return (
@@ -51,7 +72,7 @@ function Menu() {
             </ListItemButton>
           </ListItem>
           {
-            state.user && 
+            auth.logged && 
             <ListItem>
               <ListItemButton>
                 <ListItemIcon>
@@ -65,7 +86,7 @@ function Menu() {
         <Divider />
         <List>
           
-          { state.user ? 
+          { auth.logged ? 
           <>
             <ListItem>
               <ListItemButton
@@ -82,7 +103,9 @@ function Menu() {
             <ListItem>
               <ListItemButton
                 onClick={() => {
-                  signOut();
+                  handleSignOut(() => {
+                    dispatch(logoutAction())
+                  });
                 }}
               >
                 <ListItemIcon>
@@ -101,7 +124,7 @@ function Menu() {
               </ListItem>
               <ListItem>
                 <Button fullWidth variant="contained" onClick={handleSubmit}>
-                  { state.isLoading ? 'Ingresando...' : 'Entrar' }
+                  { auth.isLoading ? 'Ingresando...' : 'Entrar' }
                 </Button>
               </ListItem>
             </> }

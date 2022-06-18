@@ -4,13 +4,11 @@ import Home from "../pages/home";
 import Login from "../pages/login";
 import Professional from "../pages/professional";
 import RequireAuth from "./RequireAuth";
-import AuthProvider from "../state/context/auth";
 import Admin from "../pages/admin";
 
 export default function Router() {
   return (
     <BrowserRouter>
-    <AuthProvider>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Login />} />
@@ -37,7 +35,6 @@ export default function Router() {
           <Route path="*" element={<NoMatch />} />
         </Route>
       </Routes>
-      </AuthProvider>
     </BrowserRouter>
   );
 }

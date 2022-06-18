@@ -8,6 +8,9 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { persistor, store } from './redux/store'
+import { Provider } from 'react-redux'
+import { PersistGate } from 'reduxjs-toolkit-persist/integration/react'
 
 const theme = createTheme({
   typography: {
@@ -30,11 +33,15 @@ const theme = createTheme({
 
 
 ReactDOM.render(
-  <ThemeProvider theme={theme}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </ThemeProvider>,
+  <Provider store={store}>
+    <ThemeProvider theme={theme}>
+      <React.StrictMode>
+        <PersistGate loading={null} persistor={persistor}>
+          <App />
+        </PersistGate>
+      </React.StrictMode>
+    </ThemeProvider>
+  </Provider>,
   document.getElementById('root')
 );
 

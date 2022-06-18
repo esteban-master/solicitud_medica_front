@@ -1,7 +1,7 @@
 import { Grid, Typography } from "@mui/material"
-import { EntityResponse } from "../../api/entity"
+import { UserEntity } from "../../redux/auth/authSlice"
 
-const ListDataUser = ({ data }: { data: EntityResponse }) => {
+const ListDataUser = ({ data }: { data: UserEntity | null }) => {
   
   return (
     <Grid container item spacing={1} xs={12} md={6}>
@@ -10,7 +10,7 @@ const ListDataUser = ({ data }: { data: EntityResponse }) => {
           <Typography variant="h4" component="h4">Dirección</Typography>
         </Grid>
         <Grid item xs={8}>
-          <Typography variant="body1" component="p">{data.entity.address}</Typography>
+          <Typography variant="body1" component="p">{data?.address}</Typography>
         </Grid>
       </Grid>
 
@@ -19,7 +19,7 @@ const ListDataUser = ({ data }: { data: EntityResponse }) => {
           <Typography variant="h4" component="h4">Edad</Typography>
         </Grid>
         <Grid item xs={8}>
-          <Typography variant="body1" component="p">{data.entity.age}</Typography>
+          <Typography variant="body1" component="p">{data?.age}</Typography>
         </Grid>
       </Grid>
       
@@ -28,7 +28,7 @@ const ListDataUser = ({ data }: { data: EntityResponse }) => {
           <Typography variant="h4" component="h4">Contacto</Typography>
         </Grid>
         <Grid item xs={8}>
-          <Typography variant="body1" component="p">{data.entity.phone}</Typography>
+          <Typography variant="body1" component="p">{data?.phone}</Typography>
         </Grid>
       </Grid>
     </Grid>

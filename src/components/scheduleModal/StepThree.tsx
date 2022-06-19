@@ -2,10 +2,11 @@ import { Grid, Paper, Typography } from "@mui/material";
 import esLocale from 'date-fns/locale/es'
 import format from 'date-fns/format'
 import { useShedule } from "../../state/context/SheduleContext";
+import { useAuth } from "../../redux/store";
 
 const StepThree = () => {
-  const { state: { date }} = useShedule();
-
+  const { state: { date, professional }} = useShedule();
+  const auth = useAuth()
   return (
     <Grid item xs={12}>
       <Paper elevation={3}>
@@ -15,7 +16,7 @@ const StepThree = () => {
                 <Typography style={{ fontWeight: 'bold' }}>Profesional</Typography>
             </Grid>
             <Grid item xs={7}>
-                <Typography>Remy Sharp</Typography>
+                <Typography>{ professional.name }</Typography>
             </Grid>
           </Grid>
           <Grid item container>
@@ -33,7 +34,7 @@ const StepThree = () => {
                 <Typography style={{ fontWeight: 'bold' }}>Direccion</Typography>
             </Grid>
             <Grid item xs={7}>
-                <Typography>Carampague #0354, Temuco</Typography>
+                <Typography>{ auth.user?.address }</Typography>
             </Grid>
           </Grid>
         </Grid>

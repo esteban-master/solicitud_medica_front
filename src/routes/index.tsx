@@ -4,7 +4,6 @@ import Home from "../pages/home";
 import Login from "../pages/login";
 import Professional from "../pages/professional";
 import RequireAuth from "./RequireAuth";
-import Admin from "../pages/admin";
 
 export default function Router() {
   return (
@@ -29,8 +28,6 @@ export default function Router() {
               </RequireAuth>
             }
           />
-
-          <Route path="admin" element={<Admin />} />
 
           <Route path="*" element={<NoMatch />} />
         </Route>

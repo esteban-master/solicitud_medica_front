@@ -6,6 +6,8 @@ import { useCreateMedicalCare } from '../../api/medicalCare';
 import { toast } from 'react-toastify';
 import StepOne from './StepOne';
 import StepThree from './StepThree';
+import { useAuth } from "../../redux/store";
+import { useQueryClient } from "react-query";
 
 const steps = [
   {label: 'Seleccionar Medico', component: <StepOne />}, 
@@ -15,9 +17,9 @@ const steps = [
 const ScheduleModal = NiceModal.create(() => {
   const { state: { activeStep }, state ,changeState } = useShedule()
   const modal = useModal()
-
+  const auth = useAuth()
   const createMedicalCareMutation = useCreateMedicalCare()
-
+  const queryClient = useQueryClient()
   const handleBack = () => {
     changeState({ activeStep: activeStep - 1 })
   };
@@ -26,12 +28,13 @@ const ScheduleModal = NiceModal.create(() => {
     const toastId = toast.loading("Creando cita...", { position: toast.POSITION.BOTTOM_CENTER })
     createMedicalCareMutation.mutate({ 
       date: state.date, 
-      patientId: 30, 
+      patientId: auth.user?.patientId, 
       healthProfessionalId: state.professional.id 
     }, {
       onSuccess: (data, variables, context) => {
         modal.resolve({ data, toastId });
         changeState({ professionalFilter: null, activeStep: 0, professional: '' })
+        queryClient.setQueryData(['nextMedicalCare', auth.user?.patientId], data)
         modal.remove()
       }
     })

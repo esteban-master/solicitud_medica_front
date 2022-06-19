@@ -17,13 +17,14 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 
-export const signIn = ({ email, password }: LoginData, success: (user: User) => void) => {
+export const signIn = ({ email, password }: LoginData, success: (user: User) => void, error: () => void) => {
   signInWithEmailAndPassword(auth, email, password)
     .then((credentials) => {
       success(credentials.user)
       toast.success('Ingreso exitoso', { position: toast.POSITION.BOTTOM_CENTER })
     })
     .catch(() => {
+      error()
       toast.error('Credenciales invalidas', { position: toast.POSITION.BOTTOM_CENTER })
     })
 };

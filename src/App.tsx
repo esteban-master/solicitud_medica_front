@@ -10,10 +10,8 @@ import NiceModal from "@ebay/nice-modal-react";
 import ScheduleModal from './components/scheduleModal';
 import SheduleProvider from './state/context/SheduleContext';
 import 'react-toastify/dist/ReactToastify.css';
-import AddProfessionalDialog from './components/addProfessionalDialog';
 
 NiceModal.register('scheduleModal', ScheduleModal);
-NiceModal.register('addProfesionalModal', AddProfessionalDialog);
 
 const queryClient = new QueryClient()
 

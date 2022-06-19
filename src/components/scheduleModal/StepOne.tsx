@@ -2,20 +2,22 @@ import React from "react";
 import { Autocomplete, CircularProgress, Grid, TextField, Typography } from "@mui/material";
 import ListProfessional from "./ListProfessional";
 import { useShedule } from "../../state/context/SheduleContext";
-import { useHealthProfessionals } from "../../api/healthProfessionals";
+import { useAllHealthProfessionals, useHealthProfessionals } from "../../api/healthProfessionals";
 import { useProfessions } from "../../api/profession";
 
 const StepOne = () => {
   const { state ,changeState } = useShedule();
   const professions =  useProfessions()
-  const healthProfessionals  = useHealthProfessionals(state.professionalFilter?.id)
+  const allHealthProfessionals  = useAllHealthProfessionals()
 
   if (professions.isLoading) {
     return <CircularProgress />
   }
 
   const professionsOptions: { label: string, id: number }[] = professions.isSuccess ? professions.data.map(item => ({ label: item.name, id: item.id })) : [];
-  console.log({professionsOptions, healthProfessionals})
+  
+  const filterHealthProfessional = allHealthProfessionals.data ? allHealthProfessionals.data.filter(item => item.professionId === state.professionalFilter?.id) : [];
+  
   return (
     <Grid container spacing={2}>
       {
@@ -40,13 +42,13 @@ const StepOne = () => {
             ) : (
             <React.Fragment>
               {
-                healthProfessionals.isLoading ? <CircularProgress /> : healthProfessionals.isSuccess && 
+                allHealthProfessionals.isLoading ? <CircularProgress /> : allHealthProfessionals.isSuccess && 
                   <React.Fragment>
                     <Grid item xs={12}>
-                      <Typography variant="h2" component="h2">{healthProfessionals.data.length} resultados para {state.professionalFilter.label}</Typography>
+                      <Typography variant="h2" component="h2">{filterHealthProfessional.length} resultados para {state.professionalFilter.label}</Typography>
                     </Grid>
                     <Grid item xs={12}>
-                      <ListProfessional data={healthProfessionals.data}/>
+                      <ListProfessional data={filterHealthProfessional}/>
                     </Grid>
                   </React.Fragment>
                   

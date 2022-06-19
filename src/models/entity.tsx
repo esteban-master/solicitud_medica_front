@@ -8,5 +8,5 @@ export type Entity = {
   age:            number;
   phone:          string;
   healthProfessionalId: number;
-  patient_id: number;
+  patientId: number;
 }

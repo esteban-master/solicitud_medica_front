@@ -3,20 +3,28 @@ import { MedicalCare } from "../models/medicalCare";
 import queryString from 'query-string'
 import axios from './index'
 import camelcaseKeys from 'camelcase-keys';
-import { AxiosResponse } from "axios";
 
-const useMedicalCares = () => {
-  return useQuery<MedicalCare[]>('medicalcares', async () => {
-    const { data } = await axios.get('/medical_care')
+const useNextMedicalCare = (data: { date: Date, patientId?: number, healthProfessionalId?: number }) => {
+  const stringified = queryString.stringify(data);
+  return useQuery<MedicalCare>(['nextMedicalCare', data.patientId ? data.patientId : data.healthProfessionalId], async () => {
+    const { data } = await axios.get(`next_medical_care?${stringified}`)
     return camelcaseKeys(data)
   })
 }
 
 type CreateMedicalCare = Pick<MedicalCare, 'healthProfessionalId' | 'patientId' | 'date'>
 const createMedicalCare = async (medicalCare: CreateMedicalCare): Promise<MedicalCare> => {
-  return await axios.post('/medical_care', medicalCare)
+  const { data } = await axios.post('/medical_care', medicalCare)
+  return data
 }
 const useCreateMedicalCare = () => useMutation<MedicalCare, any, CreateMedicalCare>(createMedicalCare)
+
+
+const cancelateMedicalCare = async (id: number): Promise<MedicalCare> => {
+  const { data } = await axios.post(`/canceled_medical_care/${id}`)
+  return data
+}
+const useCanceledMedicalCare = () => useMutation<MedicalCare, any, number>(cancelateMedicalCare)
 
 const useHoursOfMedicalCareUsed = ({ id, startDate, endDate } : {id: number, startDate: Date, endDate: Date}) => useQuery<MedicalCare[]>(['hoursOfMedicalCareUsed', id], async () => {
   const stringified = queryString.stringify({ id, startDate, endDate });
@@ -25,7 +33,8 @@ const useHoursOfMedicalCareUsed = ({ id, startDate, endDate } : {id: number, sta
 })
 
 export {
-  useMedicalCares,
+  useNextMedicalCare,
   useCreateMedicalCare,
-  useHoursOfMedicalCareUsed
+  useHoursOfMedicalCareUsed,
+  useCanceledMedicalCare
 }

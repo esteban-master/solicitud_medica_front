@@ -9,6 +9,7 @@ export type SheduleState = {
   patientEditId: number;
   openMenuEdit: boolean;
   anchorEl: HTMLElement | null
+  isLoading: boolean
 }
 
 export type SheduleContextType = {
@@ -36,7 +37,8 @@ const SheduleProvider: FC<ReactNode> = ({ children }) => {
     profesionalEditId: 0,
     patientEditId: 0,
     anchorEl: null,
-    openMenuEdit: false
+    openMenuEdit: false,
+    isLoading: false
   })
 
   function changeState(state: Partial<SheduleState>): void {

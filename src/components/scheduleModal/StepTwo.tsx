@@ -6,7 +6,6 @@ import format from 'date-fns/format'
 import set from 'date-fns/set'
 import add from 'date-fns/add'
 import isBefore from 'date-fns/isBefore'
-import { MedicalCare } from "../../models/medicalCare";
 import { useHoursOfMedicalCareUsed } from "../../api/medicalCare";
 
 type Dates = { label: string, hour: number, minutes: number }
@@ -25,12 +24,6 @@ const ListDates = ({ dates, handleClickDate, dayIndex, hoursOfMedicalCareUsed }:
         const dateFns = add(setDate, { days: dayIndex });
         const formatDate = format(dateFns, "dd-MMMM-yyyy HH:mm", { locale: esLocale });
         const hourUsed = hoursOfMedicalCareUsed.includes(formatDate)
-        // console.log({ 
-        //   dateIsBefore,
-        //   hourUsed, 
-        //   hoursOfMedicalCareUsed,
-        //   formatDate
-        // })
         return (
           <Button
             key={date.label} 
@@ -64,7 +57,7 @@ const dates = [
 const datesDay = [dates, dates, dates, dates, dates]
 
 export const StepTwo = () => {
-  console.log('DATE', new Date())
+
   const { state ,changeState } = useShedule()
   const { data, isLoading, isSuccess } = useHoursOfMedicalCareUsed({
     "id": state.professional.id,
@@ -75,6 +68,7 @@ export const StepTwo = () => {
     return <CircularProgress />
   }
 
+  console.log({ data })
   return (
     <Fragment>
       <Grid container marginY={2}>

@@ -44,7 +44,7 @@ function Menu() {
         }))
         navigate('/inicio')
       })
-    });
+    }, () => dispatch(toggleLoading()));
   }
   
   return (

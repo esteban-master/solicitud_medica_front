@@ -9,7 +9,6 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
-import EventIcon from '@mui/icons-material/Event';
 import { handleSignOut, signIn } from '../../firebase/firebaseConfig';
 import { useAuth } from '../../redux/store';
 import { useDispatch } from 'react-redux';
@@ -43,6 +42,7 @@ function Menu() {
           info: data.info
         }))
         navigate('/inicio')
+        setOpen((prev) => !prev)
       })
     }, () => dispatch(toggleLoading()));
   }
@@ -63,6 +63,7 @@ function Menu() {
             <ListItemButton
               onClick={() => {
                 navigate('/inicio');
+                setOpen(false)
               }}
             >
               <ListItemIcon>
@@ -71,40 +72,33 @@ function Menu() {
               <ListItemText primary='Inicio' />
             </ListItemButton>
           </ListItem>
-          {
-            auth.logged && 
-            <ListItem>
-              <ListItemButton>
-                <ListItemIcon>
-                  <EventIcon />
-                </ListItemIcon>
-                <ListItemText primary="Solicitar hora medica"/>
-              </ListItemButton>
-            </ListItem>
-          }
         </List>
         <Divider />
         <List>
           
           { auth.logged ? 
           <>
-            <ListItem>
-              <ListItemButton
-                onClick={() => {
-                  navigate('/profesional')
-                }}
-              >
-                <ListItemIcon>
-                  <PersonIcon />
-                </ListItemIcon>
-                <ListItemText primary="Profesional" />
-              </ListItemButton>
-            </ListItem>
+            {
+              auth.logged && auth.user?.healthProfessionalId && <ListItem>
+                <ListItemButton
+                  onClick={() => {
+                    navigate('/profesional')
+                    setOpen(false)
+                  }}
+                >
+                  <ListItemIcon>
+                    <PersonIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Administrar pacientes" />
+                </ListItemButton>
+              </ListItem>
+            }
             <ListItem>
               <ListItemButton
                 onClick={() => {
                   handleSignOut(() => {
                     dispatch(logoutAction())
+                    setOpen(false)
                   });
                 }}
               >

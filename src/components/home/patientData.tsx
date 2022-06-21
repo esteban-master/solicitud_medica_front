@@ -47,13 +47,15 @@ const PatientData = ({ data }: { data: UserEntity | null }) => {
                 backgroundColor: '#AF061B'
               }}
               onClick={() => {
-                changeState({ isLoading: true })
-                canceledMedicalCare.mutate(nextMedicalCare.data.id, {
-                  onSuccess: (data) => {
-                    queryClient.setQueryData(['nextMedicalCare', auth.user?.patientId], null )
-                    changeState({ isLoading: false })
-                    toast.success('Hora cancelada', { position: toast.POSITION.BOTTOM_CENTER })
-                  }
+                NiceModal.show('confirmDialog', { message: "¿Realmente desea cancelar esta hora médica?", title: 'Cancelar hora médica' }).then(() => {
+                  changeState({ isLoading: true })
+                  canceledMedicalCare.mutate(nextMedicalCare.data.id, {
+                    onSuccess: (data) => {
+                      queryClient.setQueryData(['nextMedicalCare', auth.user?.patientId], null )
+                      changeState({ isLoading: false })
+                      toast.success('Hora cancelada', { position: toast.POSITION.BOTTOM_CENTER })
+                    }
+                  })
                 })
               }}
             >
@@ -83,11 +85,6 @@ const PatientData = ({ data }: { data: UserEntity | null }) => {
       <ListDataUser
         data={data} 
       />
-
-      <Grid item xs={12} md={6}>
-        <Typography variant='h2' component="h2">Antecedentes mórbidos</Typography>
-        <Typography variant='body1' component="p">Diabetes - Hipertencion arterial - Obesidad - Artitris reumatoide </Typography>
-      </Grid>
 
       <CurrentMedications />
       <LastDoctorsSeen />

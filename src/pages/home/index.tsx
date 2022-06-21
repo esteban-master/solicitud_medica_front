@@ -13,11 +13,12 @@ const Professional = ({ data }: { data: UserEntity | null }) => {
 
 const Home = () => {
   const auth = useAuth()
-  console.log({auth})
   return (
     <Grid>
       {
-        auth.user && auth.user.healthProfessionalId ? <Professional data={auth.user} /> : <PatientData data={auth.user}/>
+        auth.user && auth.user.healthProfessionalId ? 
+          <Professional data={auth.user} /> : 
+          <PatientData data={auth.user}/>
       }
     </Grid>
   )

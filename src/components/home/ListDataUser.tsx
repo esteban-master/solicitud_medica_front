@@ -1,10 +1,10 @@
 import { Grid, Typography } from "@mui/material"
 import { UserEntity } from "../../redux/auth/authSlice"
 
-const ListDataUser = ({ data }: { data: UserEntity | null }) => {
+const ListDataUser = ({ data }: { data: UserEntity | null  }) => {
   
   return (
-    <Grid container item spacing={1} xs={12} md={6}>
+    <Grid container item spacing={1} xs={12}>
       <Grid container item xs={12}>
         <Grid item xs={4}>
           <Typography variant="h4" component="h4">Dirección</Typography>

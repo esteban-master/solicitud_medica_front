@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "../components/layout";
 import Home from "../pages/home";
 import Login from "../pages/login";
+import MedicalRecord from "../pages/medicalRecord";
 import Professional from "../pages/professional";
 import RequireAuth from "./RequireAuth";
 
@@ -25,6 +26,15 @@ export default function Router() {
             element={
               <RequireAuth>
                 <Professional />
+              </RequireAuth>
+            }
+          />
+
+          <Route 
+            path="paciente/:id/ficha"
+            element={
+              <RequireAuth>
+                <MedicalRecord />
               </RequireAuth>
             }
           />

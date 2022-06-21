@@ -5,7 +5,6 @@ export type SheduleState = {
   professionalFilter: { id: number, label: string } | null;
   date: Date;
   activeStep: number;
-  profesionalEditId: number;
   patientEditId: number;
   openMenuEdit: boolean;
   anchorEl: HTMLElement | null
@@ -34,7 +33,6 @@ const SheduleProvider: FC<ReactNode> = ({ children }) => {
     date: new Date(),
     professionalFilter: null,
     activeStep: 0,
-    profesionalEditId: 0,
     patientEditId: 0,
     anchorEl: null,
     openMenuEdit: false,

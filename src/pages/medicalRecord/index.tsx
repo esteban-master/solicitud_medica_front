@@ -1,4 +1,4 @@
-import { Avatar, CircularProgress, Grid, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Typography } from "@mui/material"
+import { Avatar, Button, CircularProgress, Grid, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Typography } from "@mui/material"
 import ArticleIcon from '@mui/icons-material/Article';
 import NiceModal from '@ebay/nice-modal-react';
 import { useParams } from "react-router-dom"
@@ -21,13 +21,23 @@ const MedicalRecord = () => {
 
   return (
     <Grid container spacing={3}>
-      <Grid item>
+      <Grid item xs={12} md={6}>
         <Typography variant="h1" component="h1" >Ficha clinica de {medicalRecords.data.patient.name}</Typography>
       </Grid>
 
-      <ListDataUser data={medicalRecords.data.patient} />
+      <Grid item xs={12} md={6}>
+        <Button variant="contained" fullWidth onClick={() => {
+          NiceModal.show('newMedicalRecord', { patientId: params.id })
+        }}>Agregar evaluacion</Button>
+      </Grid>
 
-      <Diseases diseases={medicalRecords.data.diseases}/>
+      <Grid item xs={12} md={6}>
+        <ListDataUser data={medicalRecords.data.patient} />
+      </Grid>
+
+      <Grid item xs={12} md={6}>
+        <Diseases diseases={medicalRecords.data.diseases}/>
+      </Grid>
 
       {
         medicalRecords.data.lastMedicalRecord ? 
@@ -59,7 +69,7 @@ const MedicalRecord = () => {
       }
 
       { medicalRecords.data.medicalRecords.length > 0 ? 
-        <Grid container item xs={12}>
+        <Grid container item xs={12} md={6}>
           <Grid item xs={12}>
             <Typography variant='h2' component="h2">Historial de registros medicos</Typography>
           </Grid>

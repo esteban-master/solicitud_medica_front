@@ -68,7 +68,6 @@ export const StepTwo = () => {
     return <CircularProgress />
   }
 
-  console.log({ data })
   return (
     <Fragment>
       <Grid container marginY={2}>

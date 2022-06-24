@@ -2,7 +2,7 @@ import React from "react";
 import { Autocomplete, CircularProgress, Grid, TextField, Typography } from "@mui/material";
 import ListProfessional from "./ListProfessional";
 import { useShedule } from "../../state/context/SheduleContext";
-import { useAllHealthProfessionals, useHealthProfessionals } from "../../api/healthProfessionals";
+import { useAllHealthProfessionals } from "../../api/healthProfessionals";
 import { useProfessions } from "../../api/profession";
 
 const StepOne = () => {

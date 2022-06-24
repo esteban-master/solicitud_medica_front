@@ -3,7 +3,6 @@ import Layout from "../components/layout";
 import Home from "../pages/home";
 import Login from "../pages/login";
 import MedicalRecord from "../pages/medicalRecord";
-import Professional from "../pages/professional";
 import RequireAuth from "./RequireAuth";
 
 export default function Router() {
@@ -21,15 +20,6 @@ export default function Router() {
               </RequireAuth>
             }
           />
-          <Route 
-            path="profesional"
-            element={
-              <RequireAuth>
-                <Professional />
-              </RequireAuth>
-            }
-          />
-
           <Route 
             path="paciente/:id/ficha"
             element={

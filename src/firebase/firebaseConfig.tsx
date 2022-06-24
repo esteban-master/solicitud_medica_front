@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithEmailAndPassword, signOut, User } from 'firebase/auth'
+import { getAuth, signInWithEmailAndPassword, signOut, User} from 'firebase/auth'
 import { toast } from 'react-toastify';
 
 type LoginData = { email: string, password: string }

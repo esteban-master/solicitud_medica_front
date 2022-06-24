@@ -1,15 +1,8 @@
-import {  Grid, Typography } from "@mui/material"
+import {  Grid } from "@mui/material"
 import PatientData from "../../components/home/patientData";
-import {  UserEntity } from "../../redux/auth/authSlice";
 import { useAuth } from "../../redux/store";
+import Professional from "../professional";
 
-const Professional = ({ data }: { data: UserEntity | null }) => {
-  return (
-    <Grid>
-      <Typography>Bienvenido/a {data?.name}</Typography>
-    </Grid>
-  )
-}
 
 const Home = () => {
   const auth = useAuth()
@@ -17,7 +10,7 @@ const Home = () => {
     <Grid>
       {
         auth.user && auth.user.healthProfessionalId ? 
-          <Professional data={auth.user} /> : 
+          <Professional /> : 
           <PatientData data={auth.user}/>
       }
     </Grid>

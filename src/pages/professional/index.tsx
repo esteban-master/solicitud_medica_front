@@ -47,7 +47,7 @@ const Professional = () => {
                                           if (res.action === 'viewMedicalRecord') {
                                             navigate(`/paciente/${res.patientId}/ficha`)
                                           } else {
-                                            NiceModal.show('newMedicalRecord')
+                                            NiceModal.show('newMedicalRecord', { patientId: item.patientId })
                                           }
                                         })
                               }}>

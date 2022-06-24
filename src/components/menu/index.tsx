@@ -78,21 +78,6 @@ function Menu() {
           
           { auth.logged ? 
           <>
-            {
-              auth.logged && auth.user?.healthProfessionalId && <ListItem>
-                <ListItemButton
-                  onClick={() => {
-                    navigate('/profesional')
-                    setOpen(false)
-                  }}
-                >
-                  <ListItemIcon>
-                    <PersonIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Administrar pacientes" />
-                </ListItemButton>
-              </ListItem>
-            }
             <ListItem>
               <ListItemButton
                 onClick={() => {

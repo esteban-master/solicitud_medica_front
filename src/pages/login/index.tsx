@@ -2,6 +2,7 @@ import { Grid, Button, TextField, Typography, Stack } from "@mui/material"
 import { useState } from "react";
 import queryString from 'query-string'
 import { toast } from "react-toastify";
+
 const Login = () => {
   const [form, setForm] = useState({
     name: '',
@@ -12,7 +13,7 @@ const Login = () => {
 
   function handleLogin() {
     const stringified = queryString.stringify(form);
-    fetch(`http://localhost:3000/account_request?${stringified}`).then(res => res.json()).then(res => {
+    fetch(`http://localhost:3000/patient/account_request?${stringified}`).then(res => res.json()).then(res => {
       toast.success('Solicitud realizada', { position: toast.POSITION.BOTTOM_CENTER })
     })
   }

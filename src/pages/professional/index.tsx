@@ -15,7 +15,10 @@ const Professional = () => {
   return (
     <Grid container spacing={3}>
        <Grid item xs={12}>
-        <Typography variant="h1" component="h1">Administracion de pacientes</Typography>
+        <Typography variant="h1" component="h1">Bienvenindo { auth?.user?.name }</Typography>
+       </Grid>
+       <Grid item xs={12}>
+        <Typography variant="h2" component="h2">Administracion de pacientes</Typography>
        </Grid>
        
        <Grid item container xs={12} spacing={3}>

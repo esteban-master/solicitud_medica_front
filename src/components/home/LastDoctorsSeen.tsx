@@ -1,14 +1,17 @@
 import { Grid, Typography } from "@mui/material"
+import { HealthProfessional } from "../../models/healthProfessional"
 import ListProfessional from "../scheduleModal/ListProfessional"
 
-const LastDoctorsSeen = () => {
+const LastDoctorsSeen = ({ healthProfessionals }: { healthProfessionals: HealthProfessional[] }) => {
 
   return (
-    <Grid item container xs={12} md={6}>
+    <Grid item container>
       <Grid item xs={12}>
         <Typography variant='h2' component="h2">Últimos médicos vistos</Typography>
       </Grid>
-      <ListProfessional withButton data={[]}/>
+      <Grid item xs={12}>
+        <ListProfessional data={healthProfessionals}/>
+      </Grid>
     </Grid>
   )
 }

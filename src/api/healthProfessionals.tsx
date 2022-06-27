@@ -44,7 +44,7 @@ export type PatientsOfAProfessional = {
 
 const usePatientsOfAProfessional = (profesionalId: number | undefined ) => {
   return useQuery<Entity[]>(['patients_for_professional', profesionalId], async () => {
-    const { data } = await axios.get<Entity[]>(`/patients_for_professional/${profesionalId}`)
+    const { data } = await axios.get<Entity[]>(`health_professional/patients_for_professional/${profesionalId}`)
 
     return camelcaseKeys(data);
   }, { enabled: !!profesionalId })

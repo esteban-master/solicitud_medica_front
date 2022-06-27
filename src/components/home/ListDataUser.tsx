@@ -1,7 +1,7 @@
 import { Grid, Typography } from "@mui/material"
-import { UserEntity } from "../../redux/auth/authSlice"
+import { Patient } from "../../models/Patient"
 
-const ListDataUser = ({ data }: { data: UserEntity | null  }) => {
+const ListDataUser = ({ data }: { data: Patient | undefined  }) => {
   
   return (
     <Grid container item spacing={1} xs={12}>

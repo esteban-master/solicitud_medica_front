@@ -4,7 +4,7 @@ import axios from './index'
 
 const useProfessions = () => {
   return useQuery<Profession[]>('professions', async () => {
-    const { data } = await axios.get('/profession')
+    const { data } = await axios.get('profession')
     return data
   })
 }

@@ -7,7 +7,7 @@ import camelcaseKeys from 'camelcase-keys';
 const useNextMedicalCare = (data: { date: Date, patientId?: number, healthProfessionalId?: number }) => {
   const stringified = queryString.stringify(data);
   return useQuery<MedicalCare>(['nextMedicalCare', data.patientId ? data.patientId : data.healthProfessionalId], async () => {
-    const { data } = await axios.get(`next_medical_care?${stringified}`)
+    const { data } = await axios.get(`medical_care/next_medical_care?${stringified}`)
     return camelcaseKeys(data)
   })
 }
@@ -21,14 +21,14 @@ const useCreateMedicalCare = () => useMutation<MedicalCare, any, CreateMedicalCa
 
 
 const cancelateMedicalCare = async (id: number): Promise<MedicalCare> => {
-  const { data } = await axios.post(`/canceled_medical_care/${id}`)
+  const { data } = await axios.post(`medical_care/canceled_medical_care/${id}`)
   return data
 }
 const useCanceledMedicalCare = () => useMutation<MedicalCare, any, number>(cancelateMedicalCare)
 
 const useHoursOfMedicalCareUsed = ({ id, startDate, endDate } : {id: number, startDate: Date, endDate: Date}) => useQuery<MedicalCare[]>(['hoursOfMedicalCareUsed', id], async () => {
   const stringified = queryString.stringify({ id, startDate, endDate });
-  const { data } = await axios.get(`/medical_care_professional?${stringified}`)
+  const { data } = await axios.get(`medical_care/medical_care_professional?${stringified}`)
   return camelcaseKeys(data)
 })
 

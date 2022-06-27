@@ -48,7 +48,7 @@ const StepOne = () => {
                       <Typography variant="h2" component="h2">{filterHealthProfessional.length} resultados para {state.professionalFilter.label}</Typography>
                     </Grid>
                     <Grid item xs={12}>
-                      <ListProfessional data={filterHealthProfessional}/>
+                      <ListProfessional data={filterHealthProfessional} />
                     </Grid>
                   </React.Fragment>
                   

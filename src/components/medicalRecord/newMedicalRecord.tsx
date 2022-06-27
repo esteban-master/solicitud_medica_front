@@ -15,7 +15,7 @@ const NewMedicalRecord = NiceModal.create(({ patientId,  }) => {
   const queryClient = useQueryClient()
 
   const medicines = useQuery<{ name: string, id: number }[]>('medicines', async () => {
-    const { data } = await axios.get('/medicines')
+    const { data } = await axios.get('medicine')
     return data
   })
 
@@ -145,6 +145,7 @@ const NewMedicalRecord = NiceModal.create(({ patientId,  }) => {
         </Grid>
       </DialogContent>
       <DialogActions>
+        <Button variant="contained" color="error" onClick={() => modal.remove()}>Cancelar</Button>
         <Button variant="contained" onClick={handleSubmit}>Crear</Button>
       </DialogActions>
     </Dialog>

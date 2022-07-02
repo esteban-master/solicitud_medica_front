@@ -10,7 +10,6 @@ const Login = () => {
     email: ''
   })
 
-
   function handleLogin() {
     const stringified = queryString.stringify(form);
     fetch(`http://localhost:3000/patient/account_request?${stringified}`).then(res => res.json()).then(res => {
@@ -52,7 +51,7 @@ const Login = () => {
         </Typography>
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid item xs={12} md={4}>
         <TextField 
           label="Nombre" 
           fullWidth
@@ -61,7 +60,7 @@ const Login = () => {
           onChange={(e) => setForm(prev => ({ ...prev, name: e.target.value}))}
           />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} md={4}>
         <TextField 
           label="Correo" 
           type="email"
@@ -70,13 +69,14 @@ const Login = () => {
           onChange={(e) => setForm(prev => ({ ...prev, email: e.target.value}))}
         />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} md={4}>
         <TextField 
           label="Rut" 
           fullWidth
           variant="outlined" 
-          onChange={(e) => setForm(prev => ({ ...prev, tax_number: e.target.value}))}
-          helperText="Rut debe tener este formato: 77777777"/>
+          value={form.taxNumber}
+          onChange={(e) => setForm(prev => ({ ...prev, taxNumber: e.target.value}))}
+          />
       </Grid>
       <Grid item xs={12}>
         <Stack justifyContent="center">

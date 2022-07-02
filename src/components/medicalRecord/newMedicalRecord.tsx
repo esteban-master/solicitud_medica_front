@@ -55,7 +55,18 @@ const NewMedicalRecord = NiceModal.create(({ patientId,  }) => {
         Nuevo registro medico
       </DialogTitle>
       <DialogContent>
-        <Grid container spacing={3}>
+        <Grid container spacing={3} >
+          <Grid item xs={12} style={{ marginTop: '0.5em' }}>
+            <TextField
+              id="outlined-multiline-static"
+              label="Observaciones"
+              multiline
+              fullWidth
+              value={form.observations}
+              rows={4}
+              onChange={e => setForm((prev: any) => ({ ...prev, observations: e.target.value }))}
+            />
+          </Grid>
           <Grid item xs={12}>
             <Typography variant='h4' component="h4">Medicamentos</Typography>
           </Grid>
@@ -131,17 +142,6 @@ const NewMedicalRecord = NiceModal.create(({ patientId,  }) => {
             </Grid> : null
           }
 
-          <Grid item xs={12}>
-            <TextField
-              id="outlined-multiline-static"
-              label="Observaciones"
-              multiline
-              fullWidth
-              value={form.observations}
-              rows={4}
-              onChange={e => setForm((prev: any) => ({ ...prev, observations: e.target.value }))}
-            />
-          </Grid>
         </Grid>
       </DialogContent>
       <DialogActions>

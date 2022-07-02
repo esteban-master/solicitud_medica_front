@@ -5,6 +5,7 @@ import { useShedule } from "../../state/context/SheduleContext"
 import { usePatientsOfAProfessional } from "../../api/healthProfessionals";
 import { useAuth } from "../../redux/store";
 import { useNavigate } from "react-router-dom";
+import { formatRut } from 'chilerut'
 
 const Professional = () => {
   const auth = useAuth()
@@ -39,7 +40,7 @@ const Professional = () => {
                       { patientsOfAProfessional.data.map(item => 
                         <TableRow  key={item.patientId}>
                           <TableCell>{item.name}</TableCell>
-                          <TableCell>{item.taxNumber}</TableCell>
+                          <TableCell>{formatRut(item.taxNumber)}</TableCell>
                           <TableCell>{item.phone}</TableCell>
                           <TableCell>
                             <IconButton

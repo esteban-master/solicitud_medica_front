@@ -8,6 +8,7 @@ import ListDataUser from "../../components/home/ListDataUser"
 import Diseases from "../../components/common/Diseases"
 import CurrentMedicines from "../../components/common/CurrentMedicines";
 import { formatDate } from "../../utils/formatDate";
+import { FixedSizeList } from 'react-window';
 
 const MedicalRecord = () => {
   const params = useParams<{ id: string }>()
@@ -36,7 +37,9 @@ const MedicalRecord = () => {
             <Diseases diseases={medicalRecords.data.diseases}/>
           </Grid>
 
-          <CurrentMedicines medicalRecord={medicalRecords.data.lastMedicalRecord}/>
+          <Grid item xs={12} md={6}>
+            <CurrentMedicines medicalRecord={medicalRecords.data.lastMedicalRecord}/>
+          </Grid>
         
           { medicalRecords.data.medicalRecords.length > 0 ? 
             <Grid container item xs={12} md={6}>
@@ -44,19 +47,26 @@ const MedicalRecord = () => {
                 <Typography variant='h2' component="h2">Historial de registros medicos</Typography>
               </Grid>
               <Grid item xs={12}>
-                <List>
-                  {medicalRecords.data.medicalRecords.map((item: any) => 
-                    <ListItemButton key={item.id} onClick={() => {
-                      NiceModal.show('medicalRecordInfo', { medicalRecord: item })
+                <FixedSizeList
+                  itemData={medicalRecords.data.medicalRecords}
+                  itemCount={medicalRecords.data.medicalRecords.length}  
+                  itemSize={60}
+                  height={250}
+                  width={"100%"}
+                  overscanCount={3}
+                >
+                  {({ data, index, style }) => 
+                    <ListItemButton style={style} key={data[index].id} onClick={() => {
+                      NiceModal.show('medicalRecordInfo', { medicalRecord: data[index] })
                     }}>
                       <ListItemAvatar>
                         <Avatar>
                           <ArticleIcon />
                         </Avatar>
                       </ListItemAvatar>
-                      <ListItemText primary={ formatDate(item.createdAt, "'Ingresado el dia' EEEE dd 'de' MMMM") } secondary={`${item.medicineLines.length} medicamentos asignados`}/>
-                    </ListItemButton>)}
-                </List>
+                      <ListItemText primary={ formatDate(data[index].createdAt, "'Ingresado el dia' EEEE dd 'de' MMMM") } secondary={`${data[index].medicineLines.length} medicamentos asignados`}/>
+                    </ListItemButton>}
+                </FixedSizeList>
               </Grid>
             </Grid> : 
               <Grid container item xs={12}>

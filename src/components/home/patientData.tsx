@@ -23,9 +23,6 @@ const PatientData = ({ data }: { data: UserEntity | null }) => {
   const auth = useAuth()
   const queryClient = useQueryClient()
 
-
-  console.log({lastHealthProfessionalsSeen})
-
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={6}>

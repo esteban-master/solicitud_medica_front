@@ -14,6 +14,11 @@ const Login = () => {
     const stringified = queryString.stringify(form);
     fetch(`${process.env.REACT_APP_API}patient/account_request?${stringified}`).then(res => res.json()).then(res => {
       toast.success('Solicitud realizada', { position: toast.POSITION.BOTTOM_CENTER })
+      setForm({
+        name: '',
+        taxNumber: '',
+        email: ''
+      })
     })
   }
 

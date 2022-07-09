@@ -3,6 +3,8 @@ import { HealthProfessional } from "../models/healthProfessional";
 import axios from './index'
 import camelcaseKeys from 'camelcase-keys';
 import { Entity } from "../models/entity";
+import { MedicalCare } from "../models/medicalCare";
+import { Patient } from "../models/Patient";
 
 const useHealthProfessionals = (professionId: number | undefined) => {
   return useQuery<HealthProfessional[]>('healthProfessionals', async () => {
@@ -25,26 +27,19 @@ const useAllHealthProfessionals = () => {
   })
 }
 
-
-export type PatientsOfAProfessional = {
-  id:                     number;
-  patientId:             number;
-  patientName:           string;
-  patientAddress:        string;
-  patientPhone:          string;
-  patientTaxNumber:      string;
-  createdAt:             Date;
-  updatedAt:             Date;
-  healthProfessionalId: number;
-  attended:               boolean;
-  date:                   Date;
-  canceled:               boolean;
-}
-
-
 const usePatientsOfAProfessional = (profesionalId: number | undefined ) => {
   return useQuery<Entity[]>(['patients_for_professional', profesionalId], async () => {
     const { data } = await axios.get<Entity[]>(`health_professional/patients_for_professional/${profesionalId}`)
+
+    return camelcaseKeys(data);
+  }, { enabled: !!profesionalId })
+}
+
+export type UpcomingAppointment = { medicalCare: MedicalCare, patient: Patient }
+
+const useUpcomingAppointments = (profesionalId: number | undefined ) => {
+  return useQuery<UpcomingAppointment[]>(['upcomingAppointments', profesionalId], async () => {
+    const { data } = await axios.get<UpcomingAppointment[]>(`health_professional/upcoming_appointments/${profesionalId}`)
 
     return camelcaseKeys(data);
   }, { enabled: !!profesionalId })
@@ -54,5 +49,6 @@ export {
   useHealthProfessionals,
   useHealthProfessional,
   useAllHealthProfessionals,
-  usePatientsOfAProfessional
+  usePatientsOfAProfessional,
+  useUpcomingAppointments
 }

@@ -26,6 +26,11 @@ const cancelateMedicalCare = async (id: number): Promise<MedicalCare> => {
 }
 const useCanceledMedicalCare = () => useMutation<MedicalCare, any, number>(cancelateMedicalCare)
 
+const useUpdateMedicalCare = () => useMutation<MedicalCare, any, Partial<MedicalCare>>(async (medicalCare: Partial<MedicalCare>): Promise<MedicalCare> => {
+  const { data } = await axios.put(`medical_care`, medicalCare)
+  return data
+})
+
 const useHoursOfMedicalCareUsed = ({ id, startDate, endDate } : {id: number, startDate: Date, endDate: Date}) => useQuery<MedicalCare[]>(['hoursOfMedicalCareUsed', id], async () => {
   const stringified = queryString.stringify({ id, startDate, endDate });
   const { data } = await axios.get(`medical_care/medical_care_professional?${stringified}`)
@@ -36,5 +41,6 @@ export {
   useNextMedicalCare,
   useCreateMedicalCare,
   useHoursOfMedicalCareUsed,
-  useCanceledMedicalCare
+  useCanceledMedicalCare,
+  useUpdateMedicalCare
 }

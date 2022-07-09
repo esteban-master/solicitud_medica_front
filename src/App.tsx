@@ -23,8 +23,6 @@ NiceModal.register('medicalRecordInfo', MedicalRecordInfo);
 NiceModal.register('newMedicalRecord', NewMedicalRecord);
 NiceModal.register('medicalRecordHistory', MedicalCareHistory);
 
-console.log("JAJA", process.env.REACT_APP_POTO)
-
 const queryClient = new QueryClient()
 
 function App() {

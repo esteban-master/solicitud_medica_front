@@ -25,7 +25,7 @@ const StepThree = () => {
             </Grid>
             <Grid item xs={7}>
                 <Typography>
-                  { format(date, "'El día 'EEEE dd 'de' MMMM 'a las' HH:mm 'hrs.'", { locale: esLocale }) }
+                  { format(new Date(date), "'El día 'EEEE dd 'de' MMMM 'a las' HH:mm 'hrs.'", { locale: esLocale }) }
                 </Typography>
             </Grid>
           </Grid>

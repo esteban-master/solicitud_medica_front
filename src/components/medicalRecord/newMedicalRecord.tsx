@@ -52,7 +52,7 @@ const NewMedicalRecord = NiceModal.create(({ patientId,  }) => {
       onClose={handleClose}
     >
       <DialogTitle>
-        Nuevo registro medico
+        Nuevo registro médico
       </DialogTitle>
       <DialogContent>
         <Grid container spacing={3} >

@@ -28,7 +28,7 @@ const useCanceledMedicalCare = () => useMutation<MedicalCare, any, number>(cance
 
 const useUpdateMedicalCare = () => useMutation<MedicalCare, any, Partial<MedicalCare>>(async (medicalCare: Partial<MedicalCare>): Promise<MedicalCare> => {
   const { data } = await axios.put(`medical_care`, medicalCare)
-  return data
+  return camelcaseKeys(data)
 })
 
 const useHoursOfMedicalCareUsed = ({ id, startDate, endDate } : {id: number, startDate: Date, endDate: Date}) => useQuery<MedicalCare[]>(['hoursOfMedicalCareUsed', id], async () => {

@@ -54,7 +54,12 @@ const Professional = () => {
                         <IconButton color="primary" onClick={() => {
                           updateMedicalCare.mutate({ id: item.medicalCare.id, attended: true }, {
                             onSuccess(data, variables, context) {
-                              queryClient.invalidateQueries(['upcomingAppointments', data.healthProfessionalId])
+                              queryClient.setQueryData<any>(['upcomingAppointments', data.healthProfessionalId], (old: any) => old.map((item: any) => {
+                                if (item.medicalCare.id === data.id) {
+                                  return { ...item, medicalCare: { ...item.medicalCare, attended: data.attended}}
+                                }
+                                return item;
+                              }))
                               toast.success('Paciente atendido', { position: toast.POSITION.BOTTOM_CENTER })
                             },
                           })

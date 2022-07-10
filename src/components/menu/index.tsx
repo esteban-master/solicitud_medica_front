@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
-import PersonIcon from '@mui/icons-material/Person';
 import {
   Button,
   Divider,
@@ -16,6 +15,7 @@ import { loginAction, logoutAction, toggleLoading } from '../../redux/auth/authS
 import { useQueryClient } from 'react-query';
 import axios from '../../api/index'
 import camelcaseKeys from 'camelcase-keys';
+import { toast } from 'react-toastify';
 
 function Menu() {
   const navigate = useNavigate();
@@ -41,6 +41,7 @@ function Menu() {
           ...data.entity,
           info: data.info
         }))
+        toast.success('Ingreso exitoso', { position: toast.POSITION.BOTTOM_CENTER })
         navigate('/inicio')
         setOpen((prev) => !prev)
       })

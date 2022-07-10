@@ -21,7 +21,6 @@ export const signIn = ({ email, password }: LoginData, success: (user: User) => 
   signInWithEmailAndPassword(auth, email, password)
     .then((credentials) => {
       success(credentials.user)
-      toast.success('Ingreso exitoso', { position: toast.POSITION.BOTTOM_CENTER })
     })
     .catch(() => {
       error()

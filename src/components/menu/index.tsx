@@ -56,6 +56,7 @@ function Menu() {
         <MenuIcon />
       </IconButton>
       <Drawer
+        anchor='right'
         open={open}
         onClose={() => setOpen(false)}
       >

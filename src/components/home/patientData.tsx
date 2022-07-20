@@ -120,6 +120,7 @@ const PatientData = ({ data }: { data: UserEntity | null }) => {
                   secondaryAction={
                     <Tooltip title="Agendar cita">
                       <IconButton 
+                        disabled={!!(nextMedicalCare.isSuccess && nextMedicalCare.data)}
                         onClick={() => {
                           changeState({ professional, activeStep: 1 })
                           NiceModal.show('scheduleModal').then(({ data, toastId }: any) => {

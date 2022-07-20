@@ -51,7 +51,7 @@ const ScheduleModal = NiceModal.create(() => {
       open={modal.visible}
       onClose={handleClose}
     >
-      <DialogTitle>Solicitud atencion domiciliaria</DialogTitle>
+      <DialogTitle>Solicitud atención domiciliaria</DialogTitle>
       <DialogContent>
         <Grid container spacing={3}>
           <Grid item xs={12}>
